@@ -6,6 +6,7 @@ import org.raif.delivery.libs.errs.Error;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 public class LocationTest {
@@ -80,6 +81,15 @@ public class LocationTest {
         var location2 = Location.create(3, 4);
 
         assertThat(location1.getValue().distance(location2.getValue())).isEqualTo(4);
+    }
+
+    @Test
+    public void shouldNotBeNullInDistanceBetweenTwoLocations() {
+
+        var location1 = Location.create(1, 2);
+
+        assertThrows(NullPointerException.class, () -> location1.getValue().distance(null));
+
     }
 
 }

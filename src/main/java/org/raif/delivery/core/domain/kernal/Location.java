@@ -10,6 +10,8 @@ import java.util.List;
 public class Location extends ValueObject<Location> {
     private final int x;
     private final int y;
+    private static final int MIN_COORDINATE = 0;
+    private static final int MAX_COORDINATE = 10;
 
     public Location(int x, int y) {
         this.x = x;
@@ -25,14 +27,17 @@ public class Location extends ValueObject<Location> {
     }
 
     public static Result<Location, Error> create(int x, int y) {
-        if (x <= 0 || y <= 0 || x > 10 || y > 10) {
+        if (x <= MIN_COORDINATE || y <= MIN_COORDINATE || x > MAX_COORDINATE || y > MAX_COORDINATE) {
             return Result.failure(Error.of("invalid.coordinate", "Coordinates must be positive with max value 10."));
         }
         return Result.success(new Location(x, y));
     }
 
     public Integer distance(Location location) {
-        return Math.abs((getX()-location.x) + (getY()-location.y));
+        if (location == null) {
+            throw new NullPointerException("location must not be null.");
+        }
+        return Math.abs((getX() - location.x) + (getY() - location.y));
     }
 
     @Override
