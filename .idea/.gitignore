@@ -1,0 +1,23 @@
+### Apple MacOS ###
+.DS_Store/
+
+### Java ###
+*.class
+*.jar
+*.war
+*.ear
+
+### Apache Maven ###
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### JetBrains IntelliJ IDEA ###
+.idea/
+*.iws
+*.iml
+*.ipr
+
+### Application ###
+transaction-logs/
