@@ -44,7 +44,7 @@ public class StoragePlace extends BaseEntity<UUID> {
         return Result.success(new StoragePlace(UUID.randomUUID(), name, totalVolume, orderId));
     }
 
-    public boolean checkVolume(Integer volume) {
+    public boolean checkStorageVolume(Integer volume) {
         return orderId == null && volume < totalVolume;
     }
 

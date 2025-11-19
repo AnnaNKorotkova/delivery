@@ -47,7 +47,7 @@ class StoragePlaceTest {
         var totalVolume = 10;
         var place = StoragePlace.create(name, totalVolume, null).getValue();
 
-        var actual = place.checkVolume(5);
+        var actual = place.checkStorageVolume(5);
 
         assertThat(actual).isTrue();
     }
@@ -59,7 +59,7 @@ class StoragePlaceTest {
         var orderId = UUID.randomUUID();
         var place = StoragePlace.create(name, totalVolume, orderId).getValue();
 
-        var actual = place.checkVolume(5);
+        var actual = place.checkStorageVolume(5);
 
         assertThat(actual).isFalse();
     }
@@ -71,7 +71,7 @@ class StoragePlaceTest {
         var orderId = UUID.randomUUID();
         var place = StoragePlace.create(name, totalVolume, orderId).getValue();
 
-        var actual = place.checkVolume(15);
+        var actual = place.checkStorageVolume(15);
 
         assertThat(actual).isFalse();
     }
