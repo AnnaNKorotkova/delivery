@@ -33,7 +33,6 @@ public class Courier extends Aggregate<UUID> {
     }
 
     public static Result<Courier, Error> create(String name, int speed, Location location) {
-
         if (name == null || name.isBlank()) {
             return Result.failure(Error.of("invalid.courier", "name cant be null or empty"));
         }
@@ -41,19 +40,19 @@ public class Courier extends Aggregate<UUID> {
             return Result.failure(Error.of("invalid.courier", "speed cant be 0"));
         }
         if (location == null) {
-            return Result.failure(Error.of("invalid.courier", "Location cant be null"));
+           throw new IllegalArgumentException("location cant be null");
         }
         var storage = new ArrayList<StoragePlace>();
         storage.add(StoragePlace.create("Сумка", 10, null).getValue());
         return Result.success(new Courier(UUID.randomUUID(), name, location, speed, storage));
     }
 
-
-    public Result<Courier, Error> addStoragePlace(StoragePlace storagePlace) {
-        if (storagePlace == null) {
-            return Result.failure(Error.of("order.validation.error", "StoragePlace could not be null"));
+    public Result<Courier, Error> addStoragePlace(String name, int totalVolume) {
+        if (name == null || totalVolume == 0 || name.isBlank()) {
+            return Result.failure(Error.of("order.validation.error", "StoragePlace should have name  and total"));
         }
-        this.storagePlaces.add(storagePlace);
+        var storage = StoragePlace.create(name,totalVolume, null).getValue();
+        this.storagePlaces.add(storage);
         return Result.success(this);
     }
 
@@ -72,7 +71,6 @@ public class Courier extends Aggregate<UUID> {
         freeStoragePlace.getFirst().putOrder(order.getId(), order.getVolume());
         return Result.success(this);
     }
-
 
     public Result<Courier, Error> terminateOrder(Order order) {
         if (order == null) {
@@ -122,7 +120,6 @@ public class Courier extends Aggregate<UUID> {
         this.location = locationCreateResult.getValue();
         return UnitResult.success();
     }
-
 
     private List<StoragePlace> getFreeStoragePlace(Order order) {
         return this.storagePlaces.stream()

@@ -9,8 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class CourierTest {
@@ -48,20 +47,16 @@ class CourierTest {
     @Test
     public void createInValidCourierWithNullLocation() {
 
-        var result = Courier.create("Иван", 3, null);
+        assertThrows(IllegalArgumentException.class, () -> Courier.create("Иван", 3, null));
 
-        assertTrue(result.isFailure());
-        assertThat(result.getError().getCode()).isEqualTo("invalid.courier");
-        assertThat(result.getError().getMessage()).isEqualTo("Location cant be null");
     }
 
 
     @Test
     public void addNewStoragePlace() {
         var courier = Courier.create("Иван", 3, Location.create(1, 1).getValue()).getValue();
-        var storagePlace = StoragePlace.create("рюказник", 1, null).getValue();
 
-        var result = courier.addStoragePlace(storagePlace);
+        var result = courier.addStoragePlace("рюказник", 1);
 
         assertTrue(result.isSuccess());
         assertThat(result.getValue().getStoragePlaces().size()).isEqualTo(2);
@@ -72,8 +67,7 @@ class CourierTest {
     public void courierHasPlaceForNewOrderPlace() {
         var orderId = UUID.randomUUID();
         var courier = Courier.create("Иван", 3, Location.create(1, 1).getValue()).getValue();
-        var storagePlace = StoragePlace.create("рюказник", 10, orderId).getValue();
-        courier.addStoragePlace(storagePlace);
+        courier.addStoragePlace("рюказник", 10);
         var location = Location.create(1, 1).getValue();
         var order  = Order.create(orderId, location, 1).getValue();
 
@@ -126,10 +120,10 @@ class CourierTest {
     public void courierCanTerminateOrder() {
         var orderId = UUID.randomUUID();
         var courier = Courier.create("Иван", 3, Location.create(1, 1).getValue()).getValue();
-        var storagePlace = StoragePlace.create("рюказник", 10, orderId).getValue();
-        courier.addStoragePlace(storagePlace);
+        courier.addStoragePlace("Рюкзак", 10);
         var location = Location.create(1, 1).getValue();
         var order  = Order.create(orderId, location, 1).getValue();
+        courier.takeOrder(order);
 
         var result = courier.terminateOrder(order);
 
@@ -141,8 +135,7 @@ class CourierTest {
         var orderId = UUID.randomUUID();
         var otherOrderId = UUID.randomUUID();
         var courier = Courier.create("Иван", 3, Location.create(1, 1).getValue()).getValue();
-        var storagePlace = StoragePlace.create("рюказник", 10, orderId).getValue();
-        courier.addStoragePlace(storagePlace);
+        courier.addStoragePlace("Рюкзак", 10);
         var location = Location.create(1, 1).getValue();
         var order  = Order.create(orderId, location, 1).getValue();
         courier.takeOrder(order);
