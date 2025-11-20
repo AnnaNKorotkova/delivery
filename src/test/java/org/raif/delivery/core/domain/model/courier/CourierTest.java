@@ -56,18 +56,18 @@ class CourierTest {
     public void addNewStoragePlace() {
         var courier = Courier.create("Иван", 3, Location.create(1, 1).getValue()).getValue();
 
-        var result = courier.addStoragePlace("рюказник", 1);
+        var result = courier.addStoragePlace("Рюкзак", 1);
 
         assertTrue(result.isSuccess());
         assertThat(result.getValue().getStoragePlaces().size()).isEqualTo(2);
-        assertThat(result.getValue().getStoragePlaces().get(1).getName()).isEqualTo("рюказник");
+        assertThat(result.getValue().getStoragePlaces().get(1).getName()).isEqualTo("Рюкзак");
     }
 
     @Test
     public void courierHasPlaceForNewOrderPlace() {
         var orderId = UUID.randomUUID();
         var courier = Courier.create("Иван", 3, Location.create(1, 1).getValue()).getValue();
-        courier.addStoragePlace("рюказник", 10);
+        courier.addStoragePlace("Рюкзак", 10);
         var location = Location.create(1, 1).getValue();
         var order  = Order.create(orderId, location, 1).getValue();
 
