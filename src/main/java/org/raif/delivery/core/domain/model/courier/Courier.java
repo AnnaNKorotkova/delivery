@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.raif.delivery.core.domain.kernal.Location;
 import org.raif.delivery.core.domain.model.order.Order;
 import org.raif.delivery.libs.ddd.Aggregate;
+import org.raif.delivery.libs.ddd.BaseEntity;
 import org.raif.delivery.libs.errs.Error;
 import org.raif.delivery.libs.errs.GeneralErrors;
 import org.raif.delivery.libs.errs.Result;
@@ -125,5 +126,10 @@ public class Courier extends Aggregate<UUID> {
         return this.storagePlaces.stream()
                 .filter(storagePlace ->
                         storagePlace.getOrderId() == null && storagePlace.getTotalVolume() >= order.getVolume()).toList();
+    }
+
+    @Override
+    public int compareTo(BaseEntity<UUID> other) {
+        return super.compareTo(other);
     }
 }
