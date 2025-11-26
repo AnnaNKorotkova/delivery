@@ -1,10 +1,10 @@
 package org.raif.delivery.core.domain.services;
 
 import org.junit.jupiter.api.Test;
+import org.raif.delivery.BaseTest;
 import org.raif.delivery.core.domain.kernal.Location;
 import org.raif.delivery.core.domain.model.courier.Courier;
 import org.raif.delivery.core.domain.model.order.Order;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 import java.util.UUID;
@@ -14,8 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
-@SpringBootTest
-class OrderDispatcherImplTest {
+class OrderDispatcherImplTest extends BaseTest {
 
     @Test
     public void shouldReturnCompatibleCourier() {

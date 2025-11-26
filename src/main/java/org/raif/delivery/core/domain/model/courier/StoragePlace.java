@@ -1,5 +1,7 @@
 package org.raif.delivery.core.domain.model.courier;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,35 +11,36 @@ import org.raif.delivery.libs.errs.Result;
 
 import java.util.UUID;
 
-@NoArgsConstructor(force = true, access = AccessLevel.PROTECTED)
+@Getter
+@Embeddable
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class StoragePlace extends BaseEntity<UUID> {
 
-    @Getter
-    private UUID Id;
+    @Column(name = "storage_place_id")
+    private UUID storagePlaceId;
 
-    @Getter
+    @Column(name = "storage_place_name")
     private String name;
 
-    @Getter
+    @Column(name = "storage_place_total_volume")
     private Integer totalVolume;
 
-    @Getter
+    @Column(name = "order_id")
     private UUID orderId;
 
-    private static int MIN_VOLUME = 0;
-
-    private StoragePlace(UUID uuid, String name, Integer totalVolume, UUID orderId) {
-        this.Id = uuid;
+    public StoragePlace(UUID uuid, String name, Integer totalVolume, UUID orderId) {
+        super(uuid);
+        this.storagePlaceId = uuid;
         this.name = name;
         this.totalVolume = totalVolume;
         this.orderId = orderId;
     }
 
-
     public static Result<StoragePlace, Error> create(String name, Integer totalVolume, UUID orderId) {
         if (name.isBlank()) {
             return Result.failure(Error.of("invalid.store.place", "name cant be null or empty"));
         }
+        int MIN_VOLUME = 0;
         if (totalVolume <= MIN_VOLUME) {
             return Result.failure(Error.of("invalid.store.place", "total volume cant be less than 0"));
         }

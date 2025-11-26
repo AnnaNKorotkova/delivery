@@ -3,14 +3,13 @@ package org.raif.delivery.core.domain.model.courier;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.raif.delivery.BaseTest;
 
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest
-class StoragePlaceTest {
+class StoragePlaceTest extends BaseTest {
 
     @Test
     public void createEmptyStorage() {

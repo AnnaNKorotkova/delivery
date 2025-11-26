@@ -1,5 +1,6 @@
 package org.raif.delivery.core.domain.model.courier;
 
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,17 +16,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Entity
+@Table(name = "couriers")
 @Getter
 @NoArgsConstructor(force = true, access = AccessLevel.PROTECTED)
 public class Courier extends Aggregate<UUID> {
-    private UUID id;
+    @Column(name = "courier_id")
+    private UUID courierId;
+    @Column(name = "name")
     private String name;
+    @Embedded
     private Location location;
+    @Column(name = "speed")
     private int speed;
-    private List<StoragePlace> storagePlaces;
+    @ElementCollection
+    @CollectionTable(name = "storage_places", joinColumns = @JoinColumn(name = "courier_id"))
+    @AttributeOverrides({
+            @AttributeOverride(name = "name", column = @Column(name = "storage_place_name")),
+            @AttributeOverride(name = "totalVolume", column = @Column(name = "storage_place_total_volume")),
+            @AttributeOverride(name = "orderId", column = @Column(name = "order_id"))
+    })
+    private List<StoragePlace> storagePlaces = new ArrayList<>();
 
-    private Courier(UUID id, String name, Location location, int speed, List<StoragePlace> storagePlaces) {
-        this.id = id;
+    private Courier(UUID id,UUID courierId, String name, Location location, int speed, List<StoragePlace> storagePlaces) {
+        super(id);
+        this.courierId = courierId;
         this.name = name;
         this.location = location;
         this.speed = speed;
@@ -44,7 +59,7 @@ public class Courier extends Aggregate<UUID> {
         }
         var storage = new ArrayList<StoragePlace>();
         storage.add(StoragePlace.create("Сумка", 10, null).getValue());
-        return Result.success(new Courier(UUID.randomUUID(), name, location, speed, storage));
+        return Result.success(new Courier(UUID.randomUUID(),UUID.randomUUID(), name, location, speed, storage));
     }
 
     public Result<Courier, Error> addStoragePlace(String name, int totalVolume) {
@@ -68,7 +83,7 @@ public class Courier extends Aggregate<UUID> {
             return Result.failure(Error.of("order.take.error", "Not enough storage places"));
         }
         List<StoragePlace> freeStoragePlace = getFreeStoragePlace(order);
-        freeStoragePlace.getFirst().putOrder(order.getId(), order.getVolume());
+        freeStoragePlace.getFirst().putOrder(order.getStoragePlaceId(), order.getVolume());
         return Result.success(this);
     }
 
@@ -77,7 +92,7 @@ public class Courier extends Aggregate<UUID> {
             return Result.failure(Error.of("order.validation.error", "Order cant be null"));
         }
         var storage = this.storagePlaces.stream()
-                .filter(storagePlace -> storagePlace.getOrderId() == order.getId())
+                .filter(storagePlace -> storagePlace.getOrderId() == order.getStoragePlaceId())
                 .findFirst().orElse(null);
         if (storage == null) {
             return Result.failure(Error.of("order.validation.error", "Order from another courier "));
@@ -125,5 +140,6 @@ public class Courier extends Aggregate<UUID> {
         return this.storagePlaces.stream()
                 .filter(storagePlace ->
                         storagePlace.getOrderId() == null && storagePlace.getTotalVolume() >= order.getVolume()).toList();
+
     }
 }

@@ -1,17 +1,16 @@
 package org.raif.delivery.core.domain.model.order;
 
 import org.junit.jupiter.api.Test;
+import org.raif.delivery.BaseTest;
 import org.raif.delivery.core.domain.kernal.Location;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.raif.delivery.core.domain.model.order.OrderStatus.*;
 
-@SpringBootTest
-class OrderTest {
+class OrderTest extends BaseTest {
 
     @Test
     void createValidOrder() {
@@ -21,7 +20,7 @@ class OrderTest {
         var result = Order.create(id, location, 10);
 
         assertTrue(result.isSuccess());
-        assertThat(result.getValue().getId()).isEqualTo(id);
+        assertThat(result.getValue().getStoragePlaceId()).isEqualTo(id);
         assertThat(result.getValue().getStatus()).isEqualTo(CREATED);
         assertThat(result.getValue().getCourierId()).isNull();
     }

@@ -1,0 +1,100 @@
+package org.raif.delivery.adapters.out.postgres;
+
+import jakarta.transaction.Transactional;
+import org.junit.jupiter.api.Test;
+import org.raif.delivery.BaseTest;
+import org.raif.delivery.core.domain.kernal.Location;
+import org.raif.delivery.core.domain.model.courier.Courier;
+import org.raif.delivery.core.domain.model.order.Order;
+import org.raif.delivery.core.ports.CourierRepository;
+import org.raif.delivery.core.ports.UnitOfWork;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.testcontainers.junit.jupiter.Testcontainers;
+
+import java.util.UUID;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+@Transactional
+@Testcontainers
+class CourierRepositoryImplTest extends BaseTest {
+
+    @Autowired
+    private ApplicationContext context;
+
+
+    @Test
+    void shouldSaveCourier() {
+        var uow = context.getBean(UnitOfWork.class);
+        var courierRepository = context.getBean(CourierRepository.class, uow);
+        var courier = Courier.create("Иван", 1, Location.create(1, 1).getValue()).getValue();
+
+        courierRepository.save(courier);
+        uow.commit();
+
+        var found = courierRepository.findById(courier.getId());
+        assertThat(found).isPresent();
+        assertThat(found.get().getName()).isEqualTo("Иван");
+        assertThat(found.get().getStoragePlaces().size()).isEqualTo(1);
+        assertThat(found.get().getStoragePlaces().getFirst().getName()).isEqualTo("Сумка");
+    }
+
+    @Test
+    void shouldUpdateCourier() {
+        var uow = context.getBean(UnitOfWork.class);
+        var courierRepository = context.getBean(CourierRepository.class, uow);
+        var courier = Courier.create("Иван", 1, Location.create(1, 1).getValue()).getValue();
+        courierRepository.save(courier);
+        uow.commit();
+        courier.addStoragePlace("Рюкзак", 2);
+
+        courierRepository.update(courier);
+        uow.commit();
+
+        var found = courierRepository.findById(courier.getId());
+        assertThat(found).isPresent();
+        assertThat(found.get().getName()).isEqualTo("Иван");
+        assertThat(found.get().getStoragePlaces().size()).isEqualTo(2);
+        assertThat(found.get().getStoragePlaces().getFirst().getName()).isEqualTo("Сумка");
+        assertThat(found.get().getStoragePlaces().get(1).getName()).isEqualTo("Рюкзак");
+    }
+
+    @Test
+    void shouldFind2FreeCouriers() {
+        var uow = context.getBean(UnitOfWork.class);
+        var courierRepository = context.getBean(CourierRepository.class, uow);
+        var courier1 = Courier.create("Иван", 1, Location.create(1, 1).getValue()).getValue();
+        courierRepository.save(courier1);
+        uow.commit();
+        var courier2 = Courier.create("Иван", 1, Location.create(1, 1).getValue()).getValue();
+        courierRepository.save(courier2);
+        uow.commit();
+
+        var found = courierRepository.findFreeCouriers();
+        ;
+
+        assertThat(found).hasSize(2);
+    }
+
+
+    @Test
+    void shouldFind1FreeCouriers() {
+        var uow = context.getBean(UnitOfWork.class);
+        var courierRepository = context.getBean(CourierRepository.class, uow);
+        var courier1 = Courier.create("Иван", 1, Location.create(1, 1).getValue()).getValue();
+        var orderId = UUID.randomUUID();
+        var order = Order.create(orderId, Location.create(1, 1).getValue(), 5).getValue();
+        courier1.takeOrder(order);
+        courierRepository.save(courier1);
+        uow.commit();
+        var courier2 = Courier.create("Иван", 1, Location.create(1, 1).getValue()).getValue();
+        courierRepository.save(courier2);
+        uow.commit();
+
+        var found = courierRepository.findFreeCouriers();
+        ;
+
+        assertThat(found).hasSize(1);
+    }
+}
