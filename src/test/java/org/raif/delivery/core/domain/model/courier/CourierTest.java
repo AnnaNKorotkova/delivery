@@ -51,7 +51,6 @@ class CourierTest {
 
     }
 
-
     @Test
     public void addNewStoragePlace() {
         var courier = Courier.create("Иван", 3, Location.create(1, 1).getValue()).getValue();
