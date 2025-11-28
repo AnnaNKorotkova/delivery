@@ -2,17 +2,18 @@ package org.raif.delivery.core.domain.model.courier;
 
 
 import org.junit.jupiter.api.Test;
+import org.raif.delivery.BaseTest;
 import org.raif.delivery.core.domain.kernal.Location;
 import org.raif.delivery.core.domain.model.order.Order;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
-class CourierTest {
+class CourierTest extends BaseTest {
 
     @Test
     public void createValidCourier() {

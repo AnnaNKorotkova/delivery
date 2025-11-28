@@ -3,13 +3,11 @@ package org.raif.delivery;
 import org.junit.jupiter.api.Test;
 import org.raif.delivery.core.domain.kernal.Location;
 import org.raif.delivery.libs.errs.Error;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@SpringBootTest
-public class LocationTest {
+public class LocationTest extends BaseTest {
 
     @Test
     public void shouldCreateValidLocation() {
