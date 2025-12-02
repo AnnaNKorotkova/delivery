@@ -6,7 +6,6 @@ import org.raif.delivery.core.domain.kernal.Location;
 import org.raif.delivery.core.domain.model.order.Order;
 import org.raif.delivery.core.domain.model.order.OrderStatus;
 import org.raif.delivery.core.ports.OrderRepository;
-import org.raif.delivery.core.ports.UnitOfWork;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;

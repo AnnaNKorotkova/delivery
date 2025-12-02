@@ -7,7 +7,6 @@ import org.raif.delivery.core.domain.kernal.Location;
 import org.raif.delivery.core.domain.model.courier.Courier;
 import org.raif.delivery.core.domain.model.order.Order;
 import org.raif.delivery.core.ports.CourierRepository;
-import org.raif.delivery.core.ports.UnitOfWork;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
