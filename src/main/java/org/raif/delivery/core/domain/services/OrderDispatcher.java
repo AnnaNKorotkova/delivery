@@ -2,8 +2,8 @@ package org.raif.delivery.core.domain.services;
 
 import org.raif.delivery.core.domain.model.courier.Courier;
 import org.raif.delivery.core.domain.model.order.Order;
-import org.raif.delivery.libs.errs.Error;
-import org.raif.delivery.libs.errs.Result;
+import org.raif.libs.errs.Error;
+import org.raif.libs.errs.Result;
 
 import java.util.List;
 

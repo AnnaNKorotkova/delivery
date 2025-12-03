@@ -6,11 +6,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.raif.delivery.core.domain.kernal.Location;
 import org.raif.delivery.core.domain.model.order.Order;
-import org.raif.delivery.libs.ddd.Aggregate;
-import org.raif.delivery.libs.errs.Error;
-import org.raif.delivery.libs.errs.GeneralErrors;
-import org.raif.delivery.libs.errs.Result;
-import org.raif.delivery.libs.errs.UnitResult;
+import org.raif.libs.ddd.Aggregate;
+import org.raif.libs.errs.Error;
+import org.raif.libs.errs.GeneralErrors;
+import org.raif.libs.errs.Result;
+import org.raif.libs.errs.UnitResult;
 
 import java.util.ArrayList;
 import java.util.List;

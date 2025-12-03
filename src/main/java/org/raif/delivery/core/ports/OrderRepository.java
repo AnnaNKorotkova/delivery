@@ -12,7 +12,7 @@ public interface OrderRepository {
 
     void update(Order order);
 
-    Optional<Order> findById(UUID orderId);
+    Optional<Order> findByOrderId(UUID orderId);
 
     List<Order> findByStatus(OrderStatus status);
 

@@ -2,7 +2,7 @@ package org.raif.delivery.adapters.out.postgres;
 
 import org.raif.delivery.core.domain.model.courier.Courier;
 import org.raif.delivery.core.ports.CourierRepository;
-import org.raif.delivery.libs.errs.Except;
+import org.raif.libs.errs.Except;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -31,8 +31,8 @@ public class CourierRepositoryImpl implements CourierRepository {
     }
 
     @Override
-    public Optional<Courier> findById(UUID courierId) {
-        var courier = repository.findById(courierId);
+    public Optional<Courier> findByCourierId(UUID courierId) {
+        var courier = repository.findByCourierId(courierId);
         return courier;
     }
 

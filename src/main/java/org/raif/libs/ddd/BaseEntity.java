@@ -1,4 +1,4 @@
-package org.raif.delivery.libs.ddd;
+package org.raif.libs.ddd;
 
 import jakarta.persistence.*;
 import lombok.Getter;

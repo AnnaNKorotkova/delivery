@@ -1,4 +1,4 @@
-package org.raif.delivery.libs.errs;
+package org.raif.libs.errs;
 
 import java.math.BigDecimal;
 import java.util.Collection;

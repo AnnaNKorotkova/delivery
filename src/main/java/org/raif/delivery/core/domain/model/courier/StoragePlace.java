@@ -5,9 +5,9 @@ import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.raif.delivery.libs.ddd.BaseEntity;
-import org.raif.delivery.libs.errs.Error;
-import org.raif.delivery.libs.errs.Result;
+import org.raif.libs.ddd.BaseEntity;
+import org.raif.libs.errs.Error;
+import org.raif.libs.errs.Result;
 
 import java.util.UUID;
 

@@ -7,9 +7,9 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.raif.delivery.libs.ddd.ValueObject;
-import org.raif.delivery.libs.errs.Error;
-import org.raif.delivery.libs.errs.Result;
+import org.raif.libs.ddd.ValueObject;
+import org.raif.libs.errs.Error;
+import org.raif.libs.errs.Result;
 
 import java.util.List;
 

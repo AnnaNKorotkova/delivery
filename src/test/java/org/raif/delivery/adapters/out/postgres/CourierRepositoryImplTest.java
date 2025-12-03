@@ -28,7 +28,7 @@ class CourierRepositoryImplTest extends BaseTest {
 
         courierRepository.save(courier);
 
-        var found = courierRepository.findById(courier.getId());
+        var found = courierRepository.findByCourierId(courier.getCourierId());
         assertThat(found).isPresent();
         assertThat(found.get().getName()).isEqualTo("Иван");
         assertThat(found.get().getStoragePlaces().size()).isEqualTo(1);
@@ -43,7 +43,7 @@ class CourierRepositoryImplTest extends BaseTest {
 
         courierRepository.update(courier);
 
-        var found = courierRepository.findById(courier.getId());
+        var found = courierRepository.findByCourierId(courier.getCourierId());
         assertThat(found).isPresent();
         assertThat(found.get().getName()).isEqualTo("Иван");
         assertThat(found.get().getStoragePlaces().size()).isEqualTo(2);

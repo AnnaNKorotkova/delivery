@@ -1,4 +1,4 @@
-package org.raif.delivery.libs.errs;
+package org.raif.libs.errs;
 
 import java.util.UUID;
 

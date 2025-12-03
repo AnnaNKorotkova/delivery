@@ -1,15 +1,19 @@
 package org.raif.delivery.core.domain.model.order;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Table;
+import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.raif.delivery.core.domain.kernal.Location;
-import org.raif.delivery.libs.ddd.Aggregate;
-import org.raif.delivery.libs.errs.Error;
-import org.raif.delivery.libs.errs.Result;
-
-import java.util.UUID;
+import org.raif.libs.ddd.Aggregate;
+import org.raif.libs.errs.Error;
+import org.raif.libs.errs.Result;
 
 @Entity
 @Table(name = "orders")
@@ -17,7 +21,7 @@ import java.util.UUID;
 @NoArgsConstructor(force = true, access = AccessLevel.PROTECTED)
 public class Order extends Aggregate<UUID> {
     @Column(name = "order_id")
-    private UUID id;
+    private UUID orderId;
     @Embedded
     private Location location;
     @Column(name = "volume")
@@ -29,19 +33,20 @@ public class Order extends Aggregate<UUID> {
     private UUID courierId;
 
     public UUID getStoragePlaceId() {
-        return id;
+        return orderId;
     }
 
-    private Order(UUID id, Location location, int volume, OrderStatus status, UUID courierId) {
-        this.id = id;
+    private Order(UUID id, UUID orderId, Location location, int volume, OrderStatus status, UUID courierId) {
+        super(id);
+        this.orderId = orderId;
         this.location = location;
         this.volume = volume;
         this.status = status;
         this.courierId = courierId;
     }
 
-    public static Result<Order, Error> create(UUID id, Location location, int volume) {
-        if (id == null) {
+    public static Result<Order, Error> create(UUID courierId, Location location, int volume) {
+        if (courierId == null) {
             return Result.failure(Error.of("order.validation.error", "ID could not be null"));
         }
         if (location == null) {
@@ -50,7 +55,7 @@ public class Order extends Aggregate<UUID> {
         if (volume == 0) {
             return Result.failure(Error.of("order.validation.error", "volume could not be 0"));
         }
-        return Result.success(new Order(id, location, volume, OrderStatus.CREATED, null));
+        return Result.success(new Order(UUID.randomUUID(), courierId, location, volume, OrderStatus.CREATED, null));
     }
 
     public Result<Order, Error> assignCourier(UUID courierId) {
