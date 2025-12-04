@@ -11,7 +11,7 @@ public interface CourierRepository {
 
     void update(Courier courier);
 
-    Optional<Courier> findById(UUID courierId);
+    Optional<Courier> findByCourierId(UUID courierId);
 
     List<Courier> findFreeCouriers();
 }
