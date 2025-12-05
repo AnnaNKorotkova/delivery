@@ -1,5 +1,6 @@
 package org.raif.delivery.adapters.out.postgres;
 
+import jakarta.transaction.Transactional;
 import org.raif.delivery.core.domain.model.courier.Courier;
 import org.raif.delivery.core.ports.CourierRepository;
 import org.raif.libs.errs.Except;
@@ -10,6 +11,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
+@Transactional
 public class CourierRepositoryImpl implements CourierRepository {
 
     private final CourierJpaRepository repository;
@@ -43,5 +45,10 @@ public class CourierRepositoryImpl implements CourierRepository {
                 .filter(
                         courier -> courier.getStoragePlaces().stream()
                                 .anyMatch(palace -> palace.getOrderId() == null)).toList();
+    }
+
+    @Override
+    public List<Courier> getAllCouriers() {
+        return repository.findAll();
     }
 }

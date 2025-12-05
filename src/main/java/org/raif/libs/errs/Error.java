@@ -9,7 +9,7 @@ public final class Error {
     private final String code;
     private final String message;
 
-    private Error(String code, String message) {
+    public Error(String code, String message) {
         this.code = code;
         this.message = message;
     }
