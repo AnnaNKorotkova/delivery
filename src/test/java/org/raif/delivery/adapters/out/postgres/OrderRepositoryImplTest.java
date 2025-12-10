@@ -4,7 +4,7 @@ import jakarta.transaction.Transactional;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.raif.delivery.BaseTest;
-import org.raif.delivery.core.domain.kernal.Location;
+import org.raif.delivery.core.domain.kernel.Location;
 import org.raif.delivery.core.domain.model.order.Order;
 import org.raif.delivery.core.domain.model.order.OrderStatus;
 import org.raif.delivery.core.ports.OrderRepository;

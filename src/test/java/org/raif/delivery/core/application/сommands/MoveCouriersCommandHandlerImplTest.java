@@ -2,7 +2,9 @@ package org.raif.delivery.core.application.сommands;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import org.raif.delivery.core.domain.kernal.Location;
+import org.raif.delivery.core.application.commands.MoveCouriersCommand;
+import org.raif.delivery.core.application.commands.MoveCouriersCommandHandlerImpl;
+import org.raif.delivery.core.domain.kernel.Location;
 import org.raif.delivery.core.domain.model.courier.Courier;
 import org.raif.delivery.core.ports.CourierRepository;
 import org.raif.libs.errs.Error;

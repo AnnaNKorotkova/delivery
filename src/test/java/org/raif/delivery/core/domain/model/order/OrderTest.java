@@ -2,7 +2,7 @@ package org.raif.delivery.core.domain.model.order;
 
 import org.junit.jupiter.api.Test;
 import org.raif.delivery.BaseTest;
-import org.raif.delivery.core.domain.kernal.Location;
+import org.raif.delivery.core.domain.kernel.Location;
 
 import java.util.UUID;
 

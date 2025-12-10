@@ -3,10 +3,8 @@ package org.raif.delivery.core.domain.model.courier;
 
 import org.junit.jupiter.api.Test;
 import org.raif.delivery.BaseTest;
-import org.raif.delivery.core.domain.kernal.Location;
+import org.raif.delivery.core.domain.kernel.Location;
 import org.raif.delivery.core.domain.model.order.Order;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.UUID;
 

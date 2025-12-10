@@ -1,7 +1,7 @@
 package org.raif.delivery.core.application.usecases;
 
-import org.raif.delivery.core.application.сommands.MoveCouriersCommand;
-import org.raif.delivery.core.application.сommands.MoveCouriersCommandHandler;
+import org.raif.delivery.core.application.commands.MoveCouriersCommand;
+import org.raif.delivery.core.application.commands.MoveCouriersCommandHandler;
 import org.raif.libs.errs.Error;
 import org.raif.libs.errs.UnitResult;
 import org.springframework.beans.factory.annotation.Autowired;

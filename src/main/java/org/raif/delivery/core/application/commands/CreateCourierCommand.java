@@ -1,4 +1,4 @@
-package org.raif.delivery.core.application.сommands;
+package org.raif.delivery.core.application.commands;
 
 import org.raif.libs.errs.Err;
 import org.raif.libs.errs.Error;

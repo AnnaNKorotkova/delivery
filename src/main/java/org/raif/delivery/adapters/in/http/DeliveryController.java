@@ -11,10 +11,10 @@ import org.raif.delivery.adapters.in.http.model.NewCourier;
 import org.raif.delivery.adapters.in.http.model.Order;
 import org.raif.delivery.core.application.queries.GetAllCouriersQueryHandler;
 import org.raif.delivery.core.application.queries.GetUnfinishedOrdersQueryHandler;
-import org.raif.delivery.core.application.сommands.CreateCourierCommand;
-import org.raif.delivery.core.application.сommands.CreateCourierCommandHandler;
-import org.raif.delivery.core.application.сommands.CreateOrderCommand;
-import org.raif.delivery.core.application.сommands.CreateOrderCommandHandler;
+import org.raif.delivery.core.application.commands.CreateCourierCommand;
+import org.raif.delivery.core.application.commands.CreateCourierCommandHandler;
+import org.raif.delivery.core.application.commands.CreateOrderCommand;
+import org.raif.delivery.core.application.commands.CreateOrderCommandHandler;
 import org.raif.libs.errs.UnitResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -55,7 +55,7 @@ public class DeliveryController implements ApiApi {
 
     @Override
     public ResponseEntity<Void> createOrder() {
-        var command = new CreateOrderCommand(UUID.randomUUID(), "Ленина", 10);
+        var command = new CreateOrderCommand(UUID.randomUUID(), "Бажная", 10);
 
         var handle = createOrderCommandHandler.handle(command);
         if (handle.isFailure()) {

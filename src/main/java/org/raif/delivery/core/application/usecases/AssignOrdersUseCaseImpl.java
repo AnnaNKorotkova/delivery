@@ -1,7 +1,7 @@
 package org.raif.delivery.core.application.usecases;
 
-import org.raif.delivery.core.application.сommands.AssignOrderCommand;
-import org.raif.delivery.core.application.сommands.AssignOrderCommandHandler;
+import org.raif.delivery.core.application.commands.AssignOrderCommand;
+import org.raif.delivery.core.application.commands.AssignOrderCommandHandler;
 import org.raif.libs.errs.Error;
 import org.raif.libs.errs.UnitResult;
 import org.springframework.beans.factory.annotation.Autowired;

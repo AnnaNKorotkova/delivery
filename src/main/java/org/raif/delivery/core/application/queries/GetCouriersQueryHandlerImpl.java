@@ -2,7 +2,7 @@ package org.raif.delivery.core.application.queries;
 
 import java.util.UUID;
 import org.raif.delivery.core.application.queries.dto.CourierDto;
-import org.raif.delivery.core.domain.kernal.Location;
+import org.raif.delivery.core.domain.kernel.Location;
 import org.raif.libs.errs.Error;
 import org.raif.libs.errs.Result;
 import org.springframework.beans.factory.annotation.Autowired;

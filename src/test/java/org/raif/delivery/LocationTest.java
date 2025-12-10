@@ -1,7 +1,7 @@
 package org.raif.delivery;
 
 import org.junit.jupiter.api.Test;
-import org.raif.delivery.core.domain.kernal.Location;
+import org.raif.delivery.core.domain.kernel.Location;
 import org.raif.libs.errs.Error;
 
 import static org.assertj.core.api.Assertions.assertThat;
