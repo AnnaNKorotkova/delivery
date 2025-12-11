@@ -30,9 +30,9 @@ spring:
 
 app:
   grpc:
-    discount-service:
-      host: ${DISCOUNT_SERVICE_GRPC_HOST:0.0.0.0}
-      port: ${DISCOUNT_SERVICE_GRPC_PORT:5003}
+    geo-service:
+      host: ${GEO_SERVICE_GRPC_HOST:0.0.0.0}
+      port: ${GEO_SERVICE_GRPC_PORT:5004}
   kafka:
     stocks-events-topic: ${KAFKA_STOCKS_EVENTS_TOPIC:stocks.events}
     basket-events-topic: ${KAFKA_BASKETS_EVENTS_TOPIC:baskets.events}

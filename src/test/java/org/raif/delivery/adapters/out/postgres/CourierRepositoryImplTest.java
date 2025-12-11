@@ -3,7 +3,7 @@ package org.raif.delivery.adapters.out.postgres;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.raif.delivery.BaseTest;
-import org.raif.delivery.core.domain.kernal.Location;
+import org.raif.delivery.core.domain.kernel.Location;
 import org.raif.delivery.core.domain.model.courier.Courier;
 import org.raif.delivery.core.domain.model.order.Order;
 import org.raif.delivery.core.ports.CourierRepository;

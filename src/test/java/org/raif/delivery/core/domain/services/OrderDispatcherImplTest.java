@@ -2,7 +2,7 @@ package org.raif.delivery.core.domain.services;
 
 import org.junit.jupiter.api.Test;
 import org.raif.delivery.BaseTest;
-import org.raif.delivery.core.domain.kernal.Location;
+import org.raif.delivery.core.domain.kernel.Location;
 import org.raif.delivery.core.domain.model.courier.Courier;
 import org.raif.delivery.core.domain.model.order.Order;
 

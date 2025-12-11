@@ -1,7 +1,9 @@
 package org.raif.libs.errs;
 
 import java.util.Objects;
+import lombok.Getter;
 
+@Getter
 public final class Error {
 
     private static final String SEPARATOR = "||";
@@ -16,14 +18,6 @@ public final class Error {
 
     public static Error of(String code, String message) {
         return new Error(code, message);
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public String getMessage() {
-        return message;
     }
 
     public String serialize() {

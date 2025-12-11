@@ -10,7 +10,7 @@ import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.raif.delivery.core.domain.kernal.Location;
+import org.raif.delivery.core.domain.kernel.Location;
 import org.raif.libs.ddd.Aggregate;
 import org.raif.libs.errs.Error;
 import org.raif.libs.errs.Result;

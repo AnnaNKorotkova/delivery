@@ -1,4 +1,4 @@
-package org.raif.delivery.core.domain.kernal;
+package org.raif.delivery.core.domain.kernel;
 
 
 import jakarta.persistence.Column;
