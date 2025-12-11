@@ -1,6 +1,6 @@
-package org.raif.delivery.core.application.сommands;
+package org.raif.delivery.core.application.commands;
 
-import org.raif.delivery.core.domain.kernal.Location;
+import org.raif.delivery.core.domain.kernel.Location;
 import org.raif.delivery.core.ports.CourierRepository;
 import org.raif.libs.errs.Error;
 import org.raif.libs.errs.UnitResult;

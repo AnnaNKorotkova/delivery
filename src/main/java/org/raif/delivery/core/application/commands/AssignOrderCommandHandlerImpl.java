@@ -1,4 +1,4 @@
-package org.raif.delivery.core.application.сommands;
+package org.raif.delivery.core.application.commands;
 
 import jakarta.transaction.Transactional;
 import org.raif.delivery.core.domain.model.courier.Courier;

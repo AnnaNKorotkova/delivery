@@ -29,6 +29,10 @@ spring:
     name: basket
 
 app:
+  grpc:
+    geo-service:
+      host: ${GEO_SERVICE_GRPC_HOST:0.0.0.0}
+      port: ${GEO_SERVICE_GRPC_PORT:5004}
   kafka:
     basket-events-topic: ${KAFKA_BASKETS_EVENTS_TOPIC:baskets.events}
 
