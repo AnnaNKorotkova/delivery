@@ -24,6 +24,9 @@ public class CreateOrderCommandHandlerImpl implements CreateOrderCommandHandler 
     @Transactional
     public UnitResult<Error> handle(CreateOrderCommand command) {
         Result<Location, Error> location = geoClient.getLocation(command.street());
+        if (location.isFailure()) {
+            return UnitResult.failure(location.getError());
+        }
         orderRepository.save(Order.create(command.orderId(), location.getValue(), command.volume()).getValue());
         return UnitResult.success();
     }

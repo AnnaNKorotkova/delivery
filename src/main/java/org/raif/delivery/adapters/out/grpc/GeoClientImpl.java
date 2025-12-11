@@ -2,7 +2,6 @@ package org.raif.delivery.adapters.out.grpc;
 
 import clients.geo.GeoGrpc;
 import clients.geo.GeoProto;
-import io.grpc.StatusRuntimeException;
 import java.util.concurrent.TimeUnit;
 import org.raif.delivery.core.domain.kernel.Location;
 import org.raif.delivery.core.ports.GeoClient;
@@ -38,10 +37,8 @@ public class GeoClientImpl implements GeoClient {
 
             return Result.success(Location.create(location.getX(), location.getY()).getValue());
 
-        } catch (StatusRuntimeException e) {
-            return Result.failure(Error.of("call.failed", "gRPC call failed: " + e.getStatus()));
         } catch (Exception e) {
-            return Result.failure(Error.of("unexpected", "Unexpected error: " + e.getMessage()));
+              throw new  RuntimeException("Unexpected GRPc error",e);
         }
     }
 }
