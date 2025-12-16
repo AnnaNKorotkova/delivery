@@ -77,5 +77,13 @@ public class Order extends Aggregate<UUID> {
         this.status = OrderStatus.COMPLETED;
         return Result.success(this);
     }
+
+    public Result<Order, Error> terminateOrder() {
+        if (this.status == OrderStatus.COMPLETED || this.status == OrderStatus.CREATED) {
+            return Result.failure(Error.of("order.validation.error", "status should be ASSIGNED"));
+        }
+        this.status = OrderStatus.COMPLETED;
+        return Result.success(this);
+    }
 }
 

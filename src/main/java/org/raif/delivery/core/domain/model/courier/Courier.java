@@ -98,6 +98,7 @@ public class Courier extends Aggregate<UUID> {
             return Result.failure(Error.of("order.validation.error", "Order from another courier "));
         }
         storage.extractOrder();
+        this.storagePlaces.add(storage);
         return Result.success(this);
     }
 
@@ -135,6 +136,7 @@ public class Courier extends Aggregate<UUID> {
         this.location = locationCreateResult.getValue();
         return UnitResult.success();
     }
+
 
     private List<StoragePlace> getFreeStoragePlace(Order order) {
         return this.storagePlaces.stream()

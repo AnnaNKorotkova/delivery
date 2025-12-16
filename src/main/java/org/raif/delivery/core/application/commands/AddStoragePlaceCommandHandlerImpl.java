@@ -1,6 +1,8 @@
 package org.raif.delivery.core.application.commands;
 
 import jakarta.transaction.Transactional;
+import java.util.List;
+import org.raif.delivery.DomainEventPublisher;
 import org.raif.delivery.core.domain.model.courier.Courier;
 import org.raif.delivery.core.ports.CourierRepository;
 import org.raif.libs.errs.Error;
@@ -11,9 +13,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class AddStoragePlaceCommandHandlerImpl implements AddStoragePlaceCommandHandler {
     private final CourierRepository courierRepository;
+    private final DomainEventPublisher domainEventPublisher;
 
-    public AddStoragePlaceCommandHandlerImpl(CourierRepository courierRepository) {
+    public AddStoragePlaceCommandHandlerImpl(CourierRepository courierRepository, DomainEventPublisher domainEventPublisher) {
         this.courierRepository = courierRepository;
+        this.domainEventPublisher = domainEventPublisher;
     }
 
     @Override
@@ -25,6 +29,7 @@ public class AddStoragePlaceCommandHandlerImpl implements AddStoragePlaceCommand
         }
         updatedCourier.addStoragePlace(command.name(), command.totalVolume());
         courierRepository.update(updatedCourier);
+        domainEventPublisher.publish(List.of(updatedCourier));
         return UnitResult.success();
     }
 }

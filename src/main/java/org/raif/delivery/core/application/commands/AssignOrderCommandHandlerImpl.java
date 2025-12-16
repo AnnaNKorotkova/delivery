@@ -1,6 +1,8 @@
 package org.raif.delivery.core.application.commands;
 
 import jakarta.transaction.Transactional;
+import java.util.List;
+import org.raif.delivery.DomainEventPublisher;
 import org.raif.delivery.core.domain.model.courier.Courier;
 import org.raif.delivery.core.domain.model.order.Order;
 import org.raif.delivery.core.domain.model.order.OrderStatus;
@@ -13,13 +15,14 @@ import org.springframework.stereotype.Service;
 @Service
 @Transactional
 public class AssignOrderCommandHandlerImpl implements AssignOrderCommandHandler {
-
     private final CourierRepository courierRepository;
     private final OrderRepository orderRepository;
+    private final DomainEventPublisher domainEventPublisher;
 
-    public AssignOrderCommandHandlerImpl(CourierRepository courierRepository, OrderRepository orderRepository) {
+    public AssignOrderCommandHandlerImpl(CourierRepository courierRepository, OrderRepository orderRepository, DomainEventPublisher domainEventPublisher) {
         this.courierRepository = courierRepository;
         this.orderRepository = orderRepository;
+        this.domainEventPublisher = domainEventPublisher;
     }
 
     @Override
@@ -37,8 +40,10 @@ public class AssignOrderCommandHandlerImpl implements AssignOrderCommandHandler 
         if (order == null) {
             return UnitResult.failure(Error.of("courier.empty", "not found free courier"));
         }
+        order.assignCourier(courier.getCourierId());
         courier.takeOrder(order);
         courierRepository.save(courier);
+        domainEventPublisher.publish(List.of(order));
         return UnitResult.success();
     }
 }
