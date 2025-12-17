@@ -19,12 +19,12 @@ import org.springframework.stereotype.Service;
 public class CreateOrderCommandHandlerImpl implements CreateOrderCommandHandler {
     private final OrderRepository orderRepository;
     private final GeoClient geoClient;
-    private final OrderCreatedEventProducer producer;
+    private final DomainEventPublisher domainEventPublisher;
 
-    public CreateOrderCommandHandlerImpl(OrderRepository orderRepository, GeoClient geoClient, DomainEventPublisher domainEventPublisher, OrderCreatedEventProducer producer) {
+    public CreateOrderCommandHandlerImpl(OrderRepository orderRepository, GeoClient geoClient, DomainEventPublisher domainEventPublisher, OrderCreatedEventProducer producer, DomainEventPublisher domainEventPublisher1) {
         this.orderRepository = orderRepository;
         this.geoClient = geoClient;
-        this.producer = producer;
+        this.domainEventPublisher = domainEventPublisher1;
     }
 
     @Override
@@ -37,7 +37,7 @@ public class CreateOrderCommandHandlerImpl implements CreateOrderCommandHandler 
         }
         var order = Order.create(command.orderId(), location.getValue(), command.volume()).getValue();
         orderRepository.save(order);
-        producer.publish(new OrderCreatedDomainEvent(order));
+        domainEventPublisher.publish(List.of(order));
         return UnitResult.success();
     }
 }

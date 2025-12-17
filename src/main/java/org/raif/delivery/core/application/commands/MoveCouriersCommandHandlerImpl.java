@@ -2,6 +2,7 @@ package org.raif.delivery.core.application.commands;
 
 import jakarta.transaction.Transactional;
 import java.util.List;
+import org.raif.delivery.DomainEventPublisher;
 import org.raif.delivery.adapters.out.kafka.OrderCompletedEventProducer;
 import org.raif.delivery.core.domain.events.OrderCompletedDomainEvent;
 import org.raif.delivery.core.domain.model.courier.Courier;
@@ -17,12 +18,12 @@ public class MoveCouriersCommandHandlerImpl implements MoveCouriersCommandHandle
 
     private final CourierRepository courierRepository;
     private final OrderRepository orderRepository;
-    private final OrderCompletedEventProducer producer;
+    private final DomainEventPublisher domainEventPublisher;
 
-    public MoveCouriersCommandHandlerImpl(CourierRepository courierRepository, OrderRepository orderRepository, OrderCompletedEventProducer producer) {
+    public MoveCouriersCommandHandlerImpl(CourierRepository courierRepository, OrderRepository orderRepository, OrderCompletedEventProducer producer, DomainEventPublisher domainEventPublisher) {
         this.courierRepository = courierRepository;
         this.orderRepository = orderRepository;
-        this.producer = producer;
+        this.domainEventPublisher = domainEventPublisher;
     }
 
     @Override
@@ -37,7 +38,6 @@ public class MoveCouriersCommandHandlerImpl implements MoveCouriersCommandHandle
                     orderRepository.update(order);
                     courier.terminateOrder(order);
                     courierRepository.update(courier);
-                    producer.publish(new OrderCompletedDomainEvent(order));
                     return;
                 }
 
@@ -45,6 +45,7 @@ public class MoveCouriersCommandHandlerImpl implements MoveCouriersCommandHandle
                     courier.move(order.getLocation());
                     courierRepository.update(courier);
                 }
+                domainEventPublisher.publish(List.of(order, courier));
             });
         });
 
