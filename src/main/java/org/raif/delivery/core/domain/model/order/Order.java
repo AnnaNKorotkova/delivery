@@ -10,6 +10,8 @@ import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.raif.delivery.core.domain.events.OrderCompletedDomainEvent;
+import org.raif.delivery.core.domain.events.OrderCreatedDomainEvent;
 import org.raif.delivery.core.domain.kernel.Location;
 import org.raif.libs.ddd.Aggregate;
 import org.raif.libs.errs.Error;
@@ -43,6 +45,7 @@ public class Order extends Aggregate<UUID> {
         this.volume = volume;
         this.status = status;
         this.courierId = courierId;
+        raiseDomainEvent(new OrderCreatedDomainEvent(this));
     }
 
     public static Result<Order, Error> create(UUID courierId, Location location, int volume) {
@@ -75,6 +78,16 @@ public class Order extends Aggregate<UUID> {
             return Result.failure(Error.of("order.validation.error", "status should be ASSIGNED"));
         }
         this.status = OrderStatus.COMPLETED;
+        raiseDomainEvent(new OrderCompletedDomainEvent(this));
+        return Result.success(this);
+    }
+
+    public Result<Order, Error> terminateOrder() {
+        if (this.status == OrderStatus.COMPLETED || this.status == OrderStatus.CREATED) {
+            return Result.failure(Error.of("order.validation.error", "status should be ASSIGNED"));
+        }
+        this.status = OrderStatus.COMPLETED;
+        raiseDomainEvent(new OrderCompletedDomainEvent(this));
         return Result.success(this);
     }
 }

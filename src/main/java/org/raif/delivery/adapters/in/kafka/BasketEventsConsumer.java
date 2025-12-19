@@ -7,8 +7,8 @@ import com.google.protobuf.util.JsonFormat;
 import java.time.Instant;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-import org.raif.delivery.core.application.сommands.CreateOrderCommand;
-import org.raif.delivery.core.application.сommands.CreateOrderCommandHandler;
+import org.raif.delivery.core.application.commands.CreateOrderCommand;
+import org.raif.delivery.core.application.commands.CreateOrderCommandHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -54,7 +54,6 @@ public class BasketEventsConsumer {
         ObjectMapper mapper = new ObjectMapper();
         try {
             JsonNode node = mapper.readTree(json);
-            ObjectNode objectNode = (ObjectNode) node;
 
             JsonNode timestampNode = node.get("occurredAt");
             if (timestampNode != null && timestampNode.isObject()) {

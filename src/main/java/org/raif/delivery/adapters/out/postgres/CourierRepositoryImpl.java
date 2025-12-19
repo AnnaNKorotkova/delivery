@@ -41,10 +41,12 @@ public class CourierRepositoryImpl implements CourierRepository {
     @Override
     public List<Courier> findFreeCouriers() {
         var couriers = repository.findAll();
-        return couriers.stream()
+        var v =  couriers.stream()
                 .filter(
                         courier -> courier.getStoragePlaces().stream()
-                                .anyMatch(palace -> palace.getOrderId() == null)).toList();
+                                .anyMatch(palace -> palace.getOrderId() == null))
+                .toList();
+        return v;
     }
 
     @Override
